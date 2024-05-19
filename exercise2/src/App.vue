@@ -16,7 +16,7 @@
   </div>
   <h4>Solution</h4>
   <div class="solution">
-    <List data="people" options="options"></List>
+    <List :data="people" ></List>
   </div>
 
 </template>
@@ -36,12 +36,18 @@
     },
     created() {
       fetch('https://suade.org/filehosting/challenges/people.json')
-        .then(function(response) {
-          response.json();
+        .then((response) =>{
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+         
         })
-        .then(function(data) {
+        .then((data) =>{
+          console.log(data)
           this.people = data;
-        });
+        })
+        .catch(error => console.error('Error fetching people data:', error));
     },
   };
 
