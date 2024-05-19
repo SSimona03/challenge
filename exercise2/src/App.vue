@@ -44,7 +44,7 @@
          
         })
         .then((data) =>{
-          console.log(data)
+          //  console.log(data)
           this.people = data;
         })
         .catch(error => console.error('Error fetching people data:', error));
