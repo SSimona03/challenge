@@ -16,7 +16,14 @@
   </div>
   <h4>Solution</h4>
   <div class="solution">
-    <List :data="people" ></List>
+    <List :data="paginatedData" :options="options" ></List>
+    <div class="pagination">
+      <ul>
+        <li :class="{disabled: currentPage === 0}" @click="changePage(currentPage-1)">&lt;</li>
+        <li v-for="p in pages" :key="p" :class="{active: p === currentPage}" @click="changePage(p)">{{ p + 1 }}</li>
+        <li :class="{disabled: currentPage === pages.length - 1}" @click="changePage(currentPage+1)">&gt;</li> 
+      </ul>
+    </div>
   </div>
 
 </template>
@@ -49,6 +56,39 @@
         })
         .catch(error => console.error('Error fetching people data:', error));
     },
+    computed: {
+      sortedData() {
+        //    console.log(this.people)
+        // create a copy of the data array before sorting
+        return [...this.people].sort((a, b)=>{
+          if (a.name < b.name) {
+            return -1;
+          } else if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
+      },
+      // paginate data
+      paginatedData() {
+        return this.sortedData.slice(this.options.pagination.offset, this.options.pagination.offset + this.options.pagination.limit);
+      },
+      // list of pages to display
+      pages() {
+        return new Array(Math.ceil(this.people.length / this.options.pagination.limit))
+          .fill()
+          .map((v, i)=>i);
+      },
+      // currently displayed page
+      currentPage() {
+        return (this.options.pagination.offset / this.options.pagination.limit);
+      },
+    },
+    methods: {
+      changePage(page) {
+        this.options.pagination.offset = (page) * this.options.pagination.limit;
+      },
+    },
   };
 
 </script>
@@ -67,4 +107,32 @@
   }
 }
 
+
+
+.pagination ul {
+    list-style: none;
+    user-select: none;
+
+    li {
+      display: inline-block;
+      padding: 0 4px;
+      cursor: pointer;
+      color: #888;
+
+      &:hover {
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      &.active{
+        color: #000;
+        font-weight: bold;
+        pointer-events:none;
+      }
+      &.disabled {
+        color: #ddd;
+        pointer-events:none;
+      }
+    }
+  }
 </style>
