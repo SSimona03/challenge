@@ -117,4 +117,71 @@
 
   // TODO: Add your CSS Styling here
 
+
+  .container{
+    margin-top: 20px;
+    box-sizing: border-box;
+
+  display: grid;
+  // grid-template-columns: repeat(auto-fill, 1fr);
+
+  @media(max-width: 600px){ 
+    grid-template-columns: repeat(var( --items-by-row-when-screen-is-less-than-600px), 50%);
+  }
+
+  @media(min-width: 600px){ 
+    grid-template-columns: repeat(var(--items-by-row-when-screen-is-more-than-600px), 25%);
+  }
+
+  @media(min-width: 1024px){ 
+    grid-template-columns: repeat(var(--items-by-row-when-screen-is-more-than-1024px),14.28%);
+   
+  }
+
+
+  }
+  .item{
+  //min-width: 100%;
+  font-family: var(--font);
+  color:white;
+  margin:  var(--item-margin);
+  border-radius:  var(--border-radius);
+  box-sizing: border-box;
+  padding: var(--item-padding);
+}
+.name{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.eye-color{
+
+display:flex;
+
+  img{
+    padding-left:5px;
+    width:20px}
+    
+    img.brown{
+            filter: hue-rotate(var(--eye-brown));
+          }
+    img.green{
+            filter: hue-rotate(var(--eye-green));
+          }
+    img.blue{
+            filter: hue-rotate(var(--eye-blue));
+          }
+  
+}
+
+.item:nth-child(1n) {
+  background-color: var(--background-2); 
+}
+.item:nth-child(2n) {
+  background-color: var(--background-3); 
+}
+.item:nth-child(4n) {
+  background-color: var(--background-1); 
+}
+
 </style>
