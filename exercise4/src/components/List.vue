@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="item in sortedData" :key="item._id">
-      <slot v-bind:item="item"></slot>
+      <slot :item="item">{{ item }}</slot>
     </li>
   </ul>
 </template>
@@ -14,6 +14,9 @@
       sorting: {type: Function, default: ()=>1},
       filtering: {type: Function, default: ()=>true},
     },
+    // created() {
+    //   console.log('Received props:', this.sortedData);
+    // },
     computed: {
       filteredData() {
         return this.data.filter(this.filtering);

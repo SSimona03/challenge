@@ -12,7 +12,7 @@ export default new Vuex.Store({
   actions: {
     getPeople(context) {
       fetch('https://suade.org/filehosting/challenges/people.json')
-        .then((response)=>response.json())
+        .then((response)=>response.json)
         .then((people)=>context.commit('savePeople', people));
     },
   },

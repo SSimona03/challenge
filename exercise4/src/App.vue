@@ -18,12 +18,34 @@
   <h4>Solution</h4>
   <div class="solution">
     <!-- TODO: implement template here -->
+    <List :sortedData="peopleList"/>
   </div>
 
 </template>
 
 <script>
   // TODO: implement logic here
+  import List from "./components/List";
+  import { sortByAge, filterByAge } from './helpers/helpers';
+  import { mapState } from 'vuex'; 
+  
+  export default {
+    name: "App",
+    components: { List },
+    
+    computed: mapState({
+      peopleList: (state) => state.people,
+    }),
+    created() {
+      console.log("people")
+    },
+    methods: {
+      sortByAge, 
+      filterByAge,
+    
+    }
+   
+  };
 </script>
 
 <style lang="scss">
